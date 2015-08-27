@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TTT</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <script src="http://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.js"></script>
+    <script src="./TTT.js" charset="utf-8"></script>
+
+  </head>
+  <body>
+      <h1>Is the X mightier than the O?</h1>
+
+      <svg version="1.1" width="1000" height="400" xmlns="http://www.w3.org/2000/svg">
+
+        <g id="gameBoard">
+          <rect id="box-r1c1" x="100" y="100" width="100" height="100" style="fill: #A6B1E1" />
+          <rect id="box-r1c2" x="201" y="100" width="100" height="100" style="fill: #A6B1E1" />
+          <rect id="box-r1c3" x="302" y="100" width="100" height="100" style="fill: #A6B1E1" />
+
+          <rect id="box-r2c1" x="100" y="201" width="100" height="100" style="fill: #A6B1E1" />
+          <rect id="box-r2c2" x="201" y="201" width="100" height="100" style="fill: #A6B1E1" />
+          <rect id="box-r2c3" x="302" y="201" width="100" height="100" style="fill: #A6B1E1" />
+
+          <rect id="box-r3c1" x="100" y="302" width="100" height="100" style="fill: #A6B1E1" />
+          <rect id="box-r3c2" x="201" y="302" width="100" height="100" style="fill: #A6B1E1" />
+          <rect id="box-r3c3" x="302" y="302" width="100" height="100" style="fill: #A6B1E1" />
+        </g>
+
+          <g id="xPiece-r1c1" class="hide">
+            <line class="hide" x1="100" y1="200" x2="200" y2="100" stroke="#000" stroke-width="10" />
+            <line class="hide" x1="200" y1="200" x2="100" y2="100" stroke="#000" stroke-width="10" />
+          </g>
+
+          <g id="oPiece-r1c1" class="hide">
+            <circle cx="150" cy="150" r="40" fill="none" stroke="#000" stroke-width="10" />
+          </g>
+
+          <g id="xPiece-r1c1" class="hide">
+            <line x1="100" y1="200" x2="200" y2="100" stroke="#000" stroke-width="10" />
+            <line x1="200" y1="200" x2="100" y2="100" stroke="#000" stroke-width="10" />
+          </g>
+
+          <g id="oPiece-r2c1" class="hide">
+            <circle cx="150" cy="250" r="40" fill="none" stroke="#000" stroke-width="10" />
+          </g>
+
+          <g id="oPiece-r3c1" class="hide">
+            <circle cx="150" cy="350" r="40" fill="none" stroke="#000" stroke-width="10" />
+          </g>
+      </svg>
+
+  </body>
+</html>
