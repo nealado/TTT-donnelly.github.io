@@ -32,41 +32,94 @@ var game = [
     var r3c2SquareArray = game[2][1];
     var r3c3SquareArray = game[2][2];
 
-//create a playerMove counter, so that in each turn
-//it counts the moves in the game, divides, so that you can
-//tell by the remainder, if odd or even, and thus, if
-//the player is an x or an o
+
 
 // on click...
 
 $( "rect" ).click(function( event ) {
   console.log( event.currentTarget.id); // true
+
   var boxClickedOnID = event.currentTarget.id
 
   if(boxClickedOnID == "box-r1c1") {
-    game[0][0] = 1;
-      $('g#xPiece-r1c1').velocity(
+
+      if (playerMove % 2 == 0) {
+        game[0][0] = 1;
+
+        $('line#xPiece-r1c1').velocity(
+        {
+          strokeWidth: 10
+        });
+      }  else {
+        game[0][0] = 0;
+          $('g#oPiece-r1c1').velocity(
+          {
+            opacity: 1
+          });
+        }
+      }
+
+  else if(boxClickedOnID == "box-r1c2") {
+
+    // Count whether or not you'r an x or an O
+    if (playerMove % 2 == 0) {
+      $('line#xPiece-r1c2').velocity(
+      {
+        strokeWidth: 10
+      });
+      game[0][1] = 1;
+    } else {
+      $('g#oPiece-r1c2').velocity(
       {
         opacity: 1
       });
-  } else if(boxClickedOnID == "box-r1c2") {
-    game[0][1] = 1;
-      $('g#xPiece-r1c2').velocity(
-      {
-        opacity: 1
-      });
-  }
+      game[0][1] = 0;
+
+    }
+
+  }   else if(boxClickedOnID == "box-r1c3") {
+
+      // Count whether or not you'r an x or an O
+      if (playerMove % 2 == 0) {
+        $('line#xPiece-r1c3').velocity(
+        {
+          strokeWidth: 10
+        });
+        game[0][2] = 1;
+      } else {
+        $('g#oPiece-r1c3').velocity(
+        {
+          opacity: 1
+        });
+        game[0][1] = 0;
+
+      }
+
+    }
 
   playerMove += 1
+
   console.log(playerMove);
   console.log(game[0][0]);
   console.log(game[0][1]);
+  console.log(game[0], game[1], game[2]);
+
+  function victoryChecking(){
+
+    //Defines all possible combinations for victory
+
+    var xVictoryR1 = [1, 1, 1]
+    if(game[0] == [1, 1, 1]) {
+      alert("X wins!");
+    }
+
+  }
 
 });
 
-    // console.log(game[0][1]);
 
-  }
+
+}
 
 updateArrayBoard();
 
@@ -83,7 +136,5 @@ var firstIcon = $('#xPiece-r1c1');
 //     opacity: 1
 //   });
 // });
-
-console.log(game);
 
 });
