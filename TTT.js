@@ -2,11 +2,42 @@ $( document ).ready(function() {
 
   console.log("TTT JS loaded");
 
+// Intro animation
+
+  $('g#gameBoard').velocity(
+    { translateY: 20,
+      opacity: 0.5}, {
+        duration: 500
+      });
+
+  $('h1').velocity({
+    translateY: 20,
+    opacity: 0.5}, {
+        duration: 500
+      }
+  );
+
+  $('g#gameBoard').velocity(
+    { translateY: 0,
+      opacity: 1}, {
+        duration: 500
+      });
+
+  $('h1').velocity(
+    { translateY: 0,
+      opacity: 1}, {
+        duration: 500
+      }
+  );
+
   var game = [
     [null, null, null],
     [null, null, null],
     [null, null, null]
   ];
+
+  var winner = ""
+  var player = ""
 
   var playerMove = 0;
 
@@ -14,7 +45,7 @@ $( document ).ready(function() {
 
   function updateArrayBoard(){
 
-    // On click
+    // On click - find out the player and return the relevant icon
 
     $( "rect" ).click(function(event) {
 
@@ -22,7 +53,7 @@ $( document ).ready(function() {
       var pos = boxClickedIDToString.replace('r','').split('c');
 
       if(playerMove % 2 == 0 && game[pos[0]][pos[1]] == null) {
-        $('line#xPiece-'+event.currentTarget.id).velocity(
+        $('g#xPiece-'+event.currentTarget.id).velocity(
           {
             strokeWidth: 10
           });
@@ -36,71 +67,84 @@ $( document ).ready(function() {
           game[pos[0]][pos[1]] = 0;
           $('g#oPiece-'+event.currentTarget.id).velocity(
             {
-              opacity: 1
+              strokeWidth: 10
             });
           victoryChecking();
         } else {
           alert("Your turn forfeited!");
         }
         playerMove += 1
-
         console.log(game);
     });
-
-}
+  }
 
 updateArrayBoard();
 
 
+//Function to determine winner
 
   function victoryChecking(){
-    var winner = ""
 
     if (playerMove % 2 == 0) {
-      winner = "X "
+      player = "X "
     } else {
-      winner = "O "
+      player = "O "
     }
+
+    //Function to clear board/stop players from continuing
+
+    function stopGame (){
+      $("<p>"+player+"Wins! Refresh to play again.</p>").appendTo("#endGameMsg");
+      $('g#pieces').velocity(
+        {
+          opacity: 0
+        });
+      $('div#overlay').show("slow");
+      $('h1').fadeTo("slow", 0);
+      $('g#gameBoard').velocity(
+        {opacity: 0}, 1250);
+    }
+
 
     //Defines all possible combinations for victory
 
     //O Win Possibilities
 
     if(game[0][0] == 0 && game[0][1] == 0 && game[0][2] == 0){
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[1][0] == 0 && game[1][1] == 0 && game[1][2] == 0) {
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[2][0] == 0 && game[2][1] == 0 && game[2][2] == 0) {
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[0][0] == 0 && game[1][0] == 0 && game[2][0] == 0) {
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[0][1] == 0 && game[1][1] == 0 && game[2][1] == 0){
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[0][2] == 0 && game[1][2] == 0 && game[2][2] == 0){
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[0][0] == 0 && game[1][1] == 0 && game[2][2] == 0){
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[0][2] == 0 && game[1][1] == 0 && game[2][0] == 0){
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     }
 
     // X Win Possibilities
     else if(game[0][0] == 1 && game[0][1] == 1 && game[0][2] == 1){
-      $("<p>"+winner+"Wins!</p>").appendTo("h1");
+      stopGame();
     } else if (game[1][0] == 1 && game[1][1] == 1 && game[1][2] == 1) {
-     $("<p>"+winner+"Wins!</p>").appendTo("h1");
+     stopGame();
    } else if (game[2][0] == 1 && game[2][1] == 1 && game[2][2] == 1) {
-     $("<p>"+winner+"Wins!</p>").appendTo("h1");
+     stopGame();
    } else if (game[0][0] == 1 && game[1][0] == 1 && game[2][0] == 1) {
-     $("<p>"+winner+"Wins!</p>").appendTo("h1");
+     stopGame();
    } else if (game[0][1] == 1 && game[1][1] == 1 && game[2][1] == 1){
-     $("<p>"+winner+"Wins!</p>").appendTo("h1");
+     stopGame();
    } else if (game[0][2] == 1 && game[1][2] == 1 && game[2][2] == 1){
-     $("<p>"+winner+"Wins!</p>").appendTo("h1");
+     stopGame();
    } else if (game[0][0] == 1 && game[1][1] == 1 && game[2][2] == 1){
-     $("<p>"+winner+"Wins!</p>").appendTo("h1");
+     stopGame();
    } else if (game[0][2] == 1 && game[1][1] == 1 && game[2][0] == 1){
-     $("<p>"+winner+"Wins!</p>").appendTo("h1");
+     stopGame();
    }
 
    // Stalemate...
@@ -109,56 +153,16 @@ updateArrayBoard();
           && game[1][0] != null && game[1][1] != null && game[1][2] != null
           && game[2][0] != null && game[2][1] != null && game[2][2] != null
    ) {
-     $("<p>Stalemate...</p>").appendTo("h1");
-   }
 
-  // console.log(game.every(isAllFilled));
-  //
-  // function isAllFilled(element, index, array) {
-  //
-  //   if (element = null) {
-  //     console.log("Keep playing")
-  //   } else {
-  //     console.log("stop");
-  //   }
-  // }
-
+     $("<p>Stalemate...refresh to play again.</p>").appendTo("#overlay");
+     $('g#pieces').velocity(
+       {
+         opacity: 0
+       });
+     $('div#overlay').show("slow");
+     $('h1').fadeTo("slow", 0);
+     $('g#gameBoard').velocity(
+       {opacity: 0}, 1250);
+    }
   }
-
-
 });
-
-// Commented out failed code
-
-// Board R1C1
-//  pos = id.split(-).replace('c'. '').splict('-')
-// board[pos[0]][pos[1]])=2
-
-// Function get icons to appear
-
-// Old attempt at aligning coordinates
-
-    // var r1c1SquareArray = game[0][0];
-    // var r1c2SquareArray = game[0][1];
-    // var r1c3SquareArray = game[0][2];
-    //
-    // var r2c1SquareArray = game[1][0];
-    // var r2c2SquareArray = game[1][1];
-    // var r2c3SquareArray = game[1][2];
-    //
-    // var r3c1SquareArray = game[2][0];
-    // var r3c2SquareArray = game[2][1];
-    // var r3c3SquareArray = game[2][2];
-
-// Old attempt at victory function
-
-  // var xVictoryR1 = [1, 1, 1];
-  //
-  // for (var i=0; i<game[0].length; i++){
-  //   for (var j=0; j<xVictoryR1.length; j++) {
-  //     if (xVictoryR1[i] === game[0][i]) {
-  //
-  //     }
-  //   }
-  // }
-  // console.log("X wins!")
