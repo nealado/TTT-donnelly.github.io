@@ -12,12 +12,12 @@ h1 {
   font-size: 5em;
   text-align: center;
   font-family: 'lobster', cursive;
-  color: white;
+  color: #40F99B;
   opacity: 0;
 }
 
 .x, .o {
-  color:#40F99B;
+  color:white;
 }
 
 
